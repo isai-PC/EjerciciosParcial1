@@ -26,3 +26,5 @@ const obtener = () => {
         coordenadas.innerHTML ="geolocalización no es compatible con este navegador.";
     }
 };
+
+//libreria de open street map
