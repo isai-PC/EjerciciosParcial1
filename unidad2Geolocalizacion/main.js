@@ -23,7 +23,7 @@ const obtener = () => {
 
         );
     } else {
-        coordenadas.innerHTML ="geolocalización no es compatible con este navegador.";
+        coordenadas.innerHTML = "geolocalización no es compatible con este navegador.";
     }
 };
 
