@@ -15,7 +15,7 @@ const obtener = () => {
                 coordenadas.innerText = `Latitud: ${latitud}, Longitud: ${longitud}`;
                 enlaceMapa.href = `https://www.google.com/maps?q=${latitud},${longitud}`; //Cambiar el enlace del mapa
                 enlaceMapa.style.display = "block";//cambiar el estilo para que se muestre
-            }
+            },
             (error) => {
                 coordenadas.innerHTML = `No se puedo obtener la informacionn`;
             }
