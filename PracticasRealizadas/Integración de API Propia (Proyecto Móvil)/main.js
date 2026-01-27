@@ -4,7 +4,7 @@ const obtenerLista = () => {
     fetch(urlApiLista)
         .then(respuesta => respuesta.json())
         .then(data => {
-            const empleados = data.items;
+            const empleados = data;
             console.log("Datos recibidos:", empleados);
             mostrarLista(empleados);
         })
@@ -14,19 +14,19 @@ const obtenerLista = () => {
         });
 }
 
-const mostrarLista = (lista) => {
+const mostrarLista = (empleados) => {
     const contenedorEmpleados = document.getElementById("contenedor-empleados");
     contenedorEmpleados.innerHTML = "";
 
-    lista.forEach(empleados => {
+    empleados.forEach(empleado => {
         const tarjeta = document.createElement("div");
-        tarjeta.classList.add("practice-card");
-        const nombreCompleto = empleados.nombre + " " + empleados.Apellido_Paterno + " " + empleados.Apellido_Materno;
+        tarjeta.classList.add("empleado-card");
+        const nombreCompleto = empleado.nombre + " " + empleado.Apellido_Paterno + " " + empleado.Apellido_Materno;
         tarjeta.innerHTML = `
-            <img src="https://juandios.grupoctic.com/Peliculas/img/${empleados.imagen}" alt="${empleados.nombreCompleto}" width="100%" style="object-fit: contain; height: 300px;">
-            <h3 class="practice-title">${empleados.nombreCompleto}</h3>
-            <p class="practice-description">${empleados.Correo}</p>
-            <p><strong>Año:</strong> ${empleados.Telefono}</p>
+            <img src="https://juandios.grupoctic.com/Peliculas/img/${empleado.foto}" alt="${nombreCompleto}" width="100%" style="object-fit: contain; height: 300px;" onerror="this.src='user.jpg'">
+            <h3 class="practice-title">${nombreCompleto}</h3>
+            <p><strong>Correo:</strong> ${empleado.Correo}</p>
+            <p><strong>Telefono:</strong> ${empleado.Telefono}</p>
         `;
 
         contenedorEmpleados.appendChild(tarjeta);
