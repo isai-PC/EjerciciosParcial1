@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica dummyJson</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-14">
+
+                    <!-- Logo -->
+                    <a href="#" class="text-white font-semibold text-lg">
+                        DummyJSON
+                    </a>
+
+                    <!-- Menu -->
+                    <div class="hidden md:flex">
+                        <ul class="flex space-x-6">
+                            <li>
+                                <a href="#" class="text-white font-medium hover:underline">Home</a>
+                            </li>
+                            <li>
+                                <a href=""
+                                    class="text-white font-medium hover:bg-blue-600 transition-colors ">Inicio</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-6">
+
+        <!-- Barra de búsqueda -->
+        <nav class="bg-gray-100 rounded-lg p-4 mb-6">
+            <form class="flex gap-2" role="search" id="form-busqueda">
+                <input id="input-busqueda" type="search" placeholder="Search" aria-label="Buscaer producto"
+                    class="flex-1 rounded-md border border-gray-300 px-3 py-2">
+                <button type="submit"
+                    class="rounded-md border border-green-600 px-4 py-2 text-green-600 hover:bg-green-600 hover:text-white transition">Buscar
+                </button>
+            </form>
+        </nav>
+
+        <!-- Botón cargar -->
+        <button onclick="cargarProductos()"
+            class="mb-6 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"> Cargar
+            Productos
+        </button>
+
+        <!-- Contenedor productos -->
+        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- 
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-4">
+                    <p class="text-gray-700 mb-2">texto</p>
+
+                    <img aria-label="Marcador de posición: Miniatura" class="w-full h-56 bg-gray-200 rounded mb-2"
+                        role="img" xmlns="http://www.w3.org/2000/svg">
+                    </img>
+
+                    <p class="text-sm text-gray-500">ksjfjbsj</p>
+                </div>
+            </div>
+ -->
+        </div>
+
+    </main>
+
+    <footer class="mt-10 bg-gray-800 text-white text-center py-4">
+        <p>Isaí Pascual Cruz</p>
+    </footer>
+
+    <script src="main.js"></script>
+
+</body>
+
+
+</html>

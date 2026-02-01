@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    <header>
+        <nav class="bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-14">
+                    <a href="index.html" class="text-white font-semibold text-lg">DummyJSON</a>
+                    <div class="hidden md:flex">
+                        <ul class="flex space-x-6">
+                            <li><a href="index.html" class="text-white font-medium hover:underline">Inicio</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 mt-6">
+        <h1 class="text-2xl font-semibold mb-4">Detalle del Producto</h1>
+        <div id="producto-detalle"></div>
+    </main>
+    <footer>
+        <p class="text-center text-gray-500 py-4">© 2024 DummyJSON. All rights reserved.</p>
+        <p class="text-center text-gray-500 py-4">Isaí Pascual Cruz</p>
+    </footer>
+    <script>
+        ///------------------------------------
+        // Obtener el id de la URL para vista detalle
+        const urlParams = new URLSearchParams(window.location.search);
+        const idProducto = urlParams.get("id");
+
+        //obtener detallew del producto
+        const cargarDetalleProducto = () => {
+            if (!idProducto) return;
+            fetch(`https://dummyjson.com/products/${idProducto}`)
+                .then((respuesta) => respuesta.json())
+                .then((producto) => {
+                    mostrarDetalleProducto(producto);
+                }).catch((err) => console.error('Error loading product detail:', err));
+        }
+        //mostrar detalle del producto
+        const mostrarDetalleProducto = (producto) => {
+            const productoDetalle = document.getElementById("producto-detalle");
+            productoDetalle.innerHTML = `
+   <div class="bg-white rounded-lg shadow p-6 grid grid-cols-1 md:grid-cols-3 gap-6">               
+                <div class="md:col-span-2">
+                    
+                    <h2 class="text-2xl font-bold mb-4 text-center">${producto.title}</h2>
+                    <img src="${producto.thumbnail}" alt="${producto.title}" class="mx-auto mb-6 w-full max-w-sm">
+                    <div class = "text-center">
+                    <p class="text-gray-700 mb-2"><strong>Price:</strong> $${producto.price}</p>
+                    <p class="text-gray-700 mb-2"><strong>Brand:</strong> ${producto.brand}</p>
+                    <p class="text-gray-700 mb-2"><strong>Stock:</strong> ${producto.stock}</p>
+                    <p class="text-gray-600 mb-4">${producto.description}</p>
+                  
+                    <a href="index.html" class="inline-block mt-4 rounded-lg bg-blue-400 px-5 py-2.5 text-white font-medium
+                      hover:bg-blue-500 active:bg-blue-600
+                      transition duration-200 ease-in-out
+                      shadow-md hover:shadow-lg">Volver a la lista de productos</a>
+                      </div>
+                    </div>
+            </div>
+                    `;
+            // Actualizar el título del documento con el nombre del producto
+            document.title = `Detalle | ${producto.title}`;
+
+        }
+        //cargar detalle al cargar la pagina
+        cargarDetalleProducto();
+
+    </script>
+
+</body>
+
+</html>
