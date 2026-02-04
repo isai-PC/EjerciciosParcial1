@@ -3,15 +3,32 @@ let productos = []; // Almacena los productos cargados
 const formBusqueda = document.getElementById("form-busqueda");
 const inputBusqueda = document.getElementById("input-busqueda");
 
-formBusqueda.addEventListener("submit", (evento) => {
+/* formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
   const terminoBusqueda = inputBusqueda.value.toLowerCase();
   const filtrarProductos = productos.filter((producto) =>
     producto.title.toLowerCase().includes(terminoBusqueda)
   );
   mostrarProductos(filtrarProductos);
-});
+}); */
+/* Busqueda simple usnado en base a ala ducumentacion 
+// Búsqueda simple (devuelve un objeto con 'products'):
+// fetch('https://dummyjson.com/products/search?q=phone')
+//   .then(res => res.json())
+//   .then(data => console.log(data));
+// */
 
+formBusqueda.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  evento.preventDefault();
+  const terminoBusqueda = inputBusqueda.value.trim();
+  if (!terminoBusqueda) return; // Si el término de búsqueda está vacío, no hacer nada
+   fetch(`https://dummyjson.com/products/search?q=${terminoBusqueda}`)
+    .then(res => res.json())
+    .then(data => {
+      mostrarProductos(data.products);
+    });
+});
 
 
 const cargarProductos = () => {
@@ -30,7 +47,7 @@ const mostrarProductos = (productos) => {
 
   productos.forEach((products) => {
     const tarjeta = document.createElement("div");
-    tarjeta.classList.add("bg-white", "rounded-lg", "shadow");
+    tarjeta.classList.add("bg-white", "rounded-lg", "shadow", "overflow-hidden", "transform", "transition-transform", "duration-300", "hover:scale-105", "hover:shadow-lg", "cursor-pointer");
 
 
     tarjeta.innerHTML = `
@@ -47,7 +64,7 @@ const mostrarProductos = (productos) => {
 }
 
 // Cargar productos al iniciar la página
-/* cargarProductos(); */
+cargarProductos();
 
 ///------------------------------------
 // Obtener el id de la URL para vista detalle
