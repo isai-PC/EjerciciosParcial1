@@ -49,3 +49,52 @@ const mostrarProductos = (productos) => {
 }// Cargar productos al iniciar la página
 cargarProductos();
 
+/* PAGINACION */
+let skip = 0;
+const limit = 10; // Cantidad de productos por página
+let total = 0;
+const numPaginas = document.getElementById("num-paginas");
+const btnAnterior = document.getElementById("btn-anterior");
+const btnSiguiente = document.getElementById("btn-siguiente");
+const cargarProduct = () => {
+  fetch(`${urlAPI}?limit=${limit}&skip=${skip}`)
+    .then(res => res.json())
+    .then(data => {
+      total = data.total;
+      mostrarProductos(data.products);
+
+      //obtener el numero de paginas
+      const paginas = Math.ceil(total / limit)
+      numPaginas.innerHTML = "";
+      //ver si esta activo}
+
+      for (let i = 1; i <= paginas; i++) {
+        const Activo = (skip / limit) + 1 === i;
+        const Activar = Activo ? "bg-blue-600 text-white shadow-md scale-105"
+          : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800";
+        numPaginas.innerHTML += `
+        <button onclick="ir(${i - 1})" class="px-3 py-1 bg-gray-200 rounded transition ${Activar}" > ${i}</button>
+        `;
+      }
+    })
+};
+
+//eventos para los botones
+btnAnterior.addEventListener("click", () => {
+  if (skip > 0) {
+    skip -= limit;
+    cargarProduct();
+  }
+});
+btnSiguiente.addEventListener("click", () => {
+  if (skip + limit < total) {
+    skip += limit;
+    cargarProduct();
+  }
+});
+const ir = (i) => {
+  skip = i * limit;
+  cargarProduct();
+};
+
+cargarProduct();
