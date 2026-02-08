@@ -49,7 +49,8 @@ const mostrarProductos = (productos) => {
 }// Cargar productos al iniciar la página
 cargarProductos();
 
-/* PAGINACION */
+/* PAGINACION 
+===================================================================================================================*/
 let skip = 0;
 const limit = 10; // Cantidad de productos por página
 let total = 0;
@@ -98,3 +99,4 @@ const ir = (i) => {
 };
 
 cargarProduct();
+/* }===================================================================================================== */
