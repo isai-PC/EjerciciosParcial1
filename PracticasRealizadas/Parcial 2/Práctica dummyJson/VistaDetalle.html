@@ -36,11 +36,22 @@
         <p class="text-center text-gray-500 py-4">© 2024 DummyJSON. All rights reserved.</p>
         <p class="text-center text-gray-500 py-4">Isaí Pascual Cruz</p>
     </footer>
+
+
+
     <script>
+        // Función para generar estrellas de calificación
+        const generarEstrellas = (rating) => {
+            const estrella = Math.round(rating);
+            var e = "";
+            for (let i = 1; i <= 5; i++) {
+                e += i <= estrella ? `<span class="text-yellow-400 text-xl">★</span>` : `<span class="text-gray-300 text-xl">☆</span>`;
+            }
+            return e;
+        };
         ///------------------------------------
         // Obtener el id de la URL para vista detalle
-        const urlParams = new URLSearchParams(window.location.search);
-        const idProducto = urlParams.get("id");
+        const idProducto = new URLSearchParams(window.location.search).get("id");
 
         //obtener detallew del producto
         const cargarDetalleProducto = () => {
@@ -65,7 +76,10 @@
                     <p class="text-gray-700 mb-2"><strong>Brand:</strong> ${producto.brand}</p>
                     <p class="text-gray-700 mb-2"><strong>Stock:</strong> ${producto.stock}</p>
                     <p class="text-gray-600 mb-4">${producto.description}</p>
-                  
+                    <div class = "mb-4 text-center">
+                    ${generarEstrellas(producto.rating)}
+                        <p class = "text-gray-700 mb-2"><strong>Rating: </strong>${producto.rating} / 5</p>
+                    </div>
                     <a href="index.html" class="inline-block mt-4 rounded-lg bg-blue-400 px-5 py-2.5 text-white font-medium
                       hover:bg-blue-500 active:bg-blue-600
                       transition duration-200 ease-in-out
@@ -76,8 +90,8 @@
                     `;
             // Actualizar el título del documento con el nombre del producto
             document.title = `Detalle | ${producto.title}`;
-
         }
+
         //cargar detalle al cargar la pagina
         cargarDetalleProducto();
 
