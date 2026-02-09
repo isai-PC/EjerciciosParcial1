@@ -49,8 +49,12 @@ const mostrarProductos = (productos) => {
           <p class="font-semibold  mt-2"><strong>Price: </strong>$${products.price}</p>
           <p class = "font-semibold  mt-2">${products.category}</p>
       </a>
-      <button class="w-full bg-red-100 text-red-600 py-2 rounded hover:bg-red-200 transition font-medium" onclick="borrarProduct(${products.id}, this)">Eliminar</button>
-      <button class="w-full bg-blue-100 text-red-600 py-2 rounded hover:bg-blue-200 transition font-medium" onclick="actualizarProduct(${products.id}, this)">Actualizar</button>"
+        <div class="flex justify-between p-4 bg-gray-50 border-t">
+            <button onclick="editarProduct(${products.id}, '${products.title}', ${products.price}, this)" 
+            class="text-blue-600 font-bold hover:text-blue-800">Editar</button>
+            <button onclick="borrarProduct(${products.id}, this)" 
+            class="text-red-600 font-bold hover:text-red-800">Eliminar</button>
+  </div>
     `;
     contenedorProductos.appendChild(tarjeta);
   });
@@ -163,17 +167,17 @@ const cambiarOrden = (valor) => {
 /* ================================Eliminar Producto */
 const borrarProduct = (id, boton) => {
   const conf = confirm(`¿Está seguro de eliminar este producto?`);
-  if(conf) {
+  if (conf) {
     fetch(`${urlAPI}/${id}`, {
       method: 'DELETE',
     })
       .then(res => res.json())
       .then(data => {
-         if (data.isDeleted) {
+        if (data.isDeleted) {
           alert(`Se ha eliminado el producto: ${data.title}`);
           const tarjetaHtml = boton.closest(".bg-white");
           tarjetaHtml.classList.add("opacity-0", "scale-95", "transition-all");
-           setTimeout(() => {
+          setTimeout(() => {
             tarjetaHtml.remove();
           }, 300);
         }
@@ -181,4 +185,30 @@ const borrarProduct = (id, boton) => {
   }
 };
 /* =============================== */
+const editarProduct = (id, titulo, precio, boton) => { /* trae los datos */
+  const NuevoT = prompt("Agregar nuevo nombre", titulo);
+  const NuevoP = prompt("Agregar nuevo precio", precio);
+  if (NuevoT !== null && NuevoP !== null) {
+    actualizar(id, NuevoT, parseFloat(nuevoP), boton);
+  }
+};
+const actualizar = (id, NuevoT, NuevoP, boton) => {
+  fetch(`${urlAPI}/${id}`, {
+    method: 'PUT', /* PAtch */
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      title: NuevoT,
+      price: NuevoP
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      alert(`Datos Actualizados`)
+      const tarjeta = boton.closest(".bg-white");
+      const elementoTitulo = tarjeta.querySelector("p.font-bold");
+      const elementoPrecio = tarjeta.querySelector("p.font-semibold");
 
+      if (elementoTitulo) elementoTitulo.textContent = data.title;
+      if (elementoPrecio) elementoPrecio.innerHTML = `<strong>Price: </strong>$${data.price}`;
+    })
+};
