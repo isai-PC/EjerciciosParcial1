@@ -15,7 +15,7 @@ formBusqueda.addEventListener("submit", (evento) => {
     });
 });
 
-
+/* 
 const cargarProductos = () => {
   fetch(urlAPI)
     .then((respuesta) => respuesta.json())
@@ -24,7 +24,7 @@ const cargarProductos = () => {
       console.log(productos);
       mostrarProductos(productos);
     });
-}
+} */
 
 const mostrarProductos = (productos) => {
   const contenedorProductos = document.getElementById("contenedor-productos");
@@ -47,10 +47,10 @@ const mostrarProductos = (productos) => {
     contenedorProductos.appendChild(tarjeta);
   });
 }// Cargar productos al iniciar la página
-cargarProductos();
+/* cargarProductos(); */
 
 /* PAGINACION 
-===================================================================================================================*/
+======================================================*/
 let skip = 0;
 const limit = 10; // Cantidad de productos por página
 let total = 0;
@@ -71,8 +71,8 @@ const cargarProduct = () => {
 
       for (let i = 1; i <= paginas; i++) {
         const Activo = (skip / limit) + 1 === i;
-        const Activar = Activo ? "bg-blue-600 text-white shadow-md scale-105"
-          : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800";
+        const Activar = Activo ? "bg-blue-600 text-white scale-105"
+          : "bg-gray-100 text-gray-600 hover:bg-blue-200 hover:text-gray-800";
         numPaginas.innerHTML += `
         <button onclick="ir(${i - 1})" class="px-3 py-1 bg-gray-200 rounded transition ${Activar}" > ${i}</button>
         `;
@@ -99,4 +99,5 @@ const ir = (i) => {
 };
 
 cargarProduct();
-/* }===================================================================================================== */
+//=================================================================================
+ 
