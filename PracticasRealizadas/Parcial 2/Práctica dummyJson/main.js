@@ -5,9 +5,9 @@ const inputBusqueda = document.getElementById("input-busqueda");
 let busquedaActual = "";
 let categoryActual = "";
 let ordenActual = "";
-
-
 const categoria = document.getElementById("categorias");
+
+
 formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
   busquedaActual = inputBusqueda.value.trim();
@@ -49,6 +49,8 @@ const mostrarProductos = (productos) => {
           <p class="font-semibold  mt-2"><strong>Price: </strong>$${products.price}</p>
           <p class = "font-semibold  mt-2">${products.category}</p>
       </a>
+      <button class="w-full bg-red-100 text-red-600 py-2 rounded hover:bg-red-200 transition font-medium" onclick="borrarProduct(${products.id}, this)">Eliminar</button>
+      <button class="w-full bg-blue-100 text-red-600 py-2 rounded hover:bg-blue-200 transition font-medium" onclick="actualizarProduct(${products.id}, this)">Actualizar</button>"
     `;
     contenedorProductos.appendChild(tarjeta);
   });
@@ -67,8 +69,8 @@ const btnSiguiente = document.getElementById("btn-siguiente");
 
 
 const cargarProduct = () => {
-  let finBusqueda = busquedaActual? `${urlAPI}/search?q=${busquedaActual}&` :/* <--Cuando hace una busqueda */
-    (categoryActual)? `${urlAPI}/category/${categoryActual}?` : /* <--Para lo de categorias */
+  let finBusqueda = busquedaActual ? `${urlAPI}/search?q=${busquedaActual}&` :/* <--Cuando hace una busqueda */
+    (categoryActual) ? `${urlAPI}/category/${categoryActual}?` : /* <--Para lo de categorias */
       `${urlAPI}?`;
 
   finBusqueda += `limit=${limit}&skip=${skip}`;//<--AGREGA LO DE PAGINACION
@@ -158,3 +160,25 @@ const cambiarOrden = (valor) => {
   skip = 0;
   cargarProduct();
 }
+/* ================================Eliminar Producto */
+const borrarProduct = (id, boton) => {
+  const conf = confirm(`¿Está seguro de eliminar este producto?`);
+  if(conf) {
+    fetch(`${urlAPI}/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(data => {
+         if (data.isDeleted) {
+          alert(`Se ha eliminado el producto: ${data.title}`);
+          const tarjetaHtml = boton.closest(".bg-white");
+          tarjetaHtml.classList.add("opacity-0", "scale-95", "transition-all");
+           setTimeout(() => {
+            tarjetaHtml.remove();
+          }, 300);
+        }
+      })
+  }
+};
+/* =============================== */
+
