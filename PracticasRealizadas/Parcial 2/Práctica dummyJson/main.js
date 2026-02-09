@@ -3,6 +3,9 @@ let productos = []; // Almacena los productos cargados
 const formBusqueda = document.getElementById("form-busqueda");
 const inputBusqueda = document.getElementById("input-busqueda");
 let busquedaActual = "";
+let categoryActual = "";
+const categoria = document.getElementById("categorias");
+
 
 formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
@@ -43,6 +46,7 @@ const mostrarProductos = (productos) => {
           <img src="${products.thumbnail}" alt="${products.title}" class="w-full h-56 bg-gray-200 rounded mb-2" />
           <p class="text-sm text-gray-600">${products.description}</p>
           <p class="font-semibold  mt-2"><strong>Price: </strong>$${products.price}</p>
+          <p class = "font-semibold  mt-2">${products.category}</p>
       </a>
     `;
     contenedorProductos.appendChild(tarjeta);
@@ -62,8 +66,9 @@ const btnSiguiente = document.getElementById("btn-siguiente");
 
 
 const cargarProduct = () => {
-  const finBusqueda = busquedaActual ?
-    `${urlAPI}/search?q=${busquedaActual}&limit=${limit}&skip=${skip}` : `${urlAPI}?limit=${limit}&skip=${skip}`;
+  const finBusqueda = busquedaActual ? `${urlAPI}/search?q=${busquedaActual}&limit=${limit}&skip=${skip}` :/* <--Cuando hace una busqueda */
+    (categoryActual) ? `${urlAPI}/category/${categoryActual}?limit=${limit}&skip=${skip}` : /* <--Para lo de categorias */
+      `${urlAPI}?limit=${limit}&skip=${skip}`;
 
   fetch(finBusqueda)
     .then(res => res.json())
@@ -109,18 +114,32 @@ cargarProduct();
 //=================================================================================
 //BSUQEDA POR CATEGORIA
 const cargarCategrias = () => {
-    fetch('https://dummyjson.com/products/category-list')
-        .then(res => res.json())
-        .then(categorias => {
-            const contenedorCategorias = document.getElementById("categorias");
-            contenedorCategorias.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevas categorias
-            categorias.forEach(categoria => {
-                const option = document.createElement("option");
-                option.value = categoria;
-                option.textContent = categoria;
-                contenedorCategorias.appendChild(option);
-            });
-        });
+  fetch('https://dummyjson.com/products/category-list')
+    .then(res => res.json())
+    .then(categorias => {
+      const contenedorCategorias = document.getElementById("categorias");
+      contenedorCategorias.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevas categorias
+      categorias.forEach(categoria => {
+        const option = document.createElement("option");
+        option.value = categoria;
+        option.textContent = categoria;
+        contenedorCategorias.appendChild(option);
+      });
+    });
 }
+categoria.addEventListener("change", (e) => {//para cuando se cambia el select
+  const SelectionCategory = e.target.value;
+  if (SelectionCategory === "") {
+    busquedaActual = "";
+    categoryActual = "";
+  }
+  else {
+    categoryActual = SelectionCategory;
+    busquedaActual = "";
+  }
+  skip = 0;//parta reiniciar
+  cargarProduct();
+});
 cargarCategrias();
 /* ====================================================================================== */
+
