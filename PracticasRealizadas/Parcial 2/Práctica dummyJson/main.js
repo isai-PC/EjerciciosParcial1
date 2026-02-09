@@ -107,3 +107,20 @@ const ir = (i) => {
 
 cargarProduct();
 //=================================================================================
+//BSUQEDA POR CATEGORIA
+const cargarCategrias = () => {
+    fetch('https://dummyjson.com/products/category-list')
+        .then(res => res.json())
+        .then(categorias => {
+            const contenedorCategorias = document.getElementById("categorias");
+            contenedorCategorias.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevas categorias
+            categorias.forEach(categoria => {
+                const option = document.createElement("option");
+                option.value = categoria;
+                option.textContent = categoria;
+                contenedorCategorias.appendChild(option);
+            });
+        });
+}
+cargarCategrias();
+/* ====================================================================================== */
