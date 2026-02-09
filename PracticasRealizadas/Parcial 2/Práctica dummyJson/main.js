@@ -2,17 +2,19 @@ const urlAPI = "https://dummyjson.com/products";
 let productos = []; // Almacena los productos cargados
 const formBusqueda = document.getElementById("form-busqueda");
 const inputBusqueda = document.getElementById("input-busqueda");
+let busquedaActual = "";
 
 formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
-  evento.preventDefault();
-  const terminoBusqueda = inputBusqueda.value.trim();
-  if (!terminoBusqueda) return; // Si el término de búsqueda está vacío, no hacer nada
+  busquedaActual = inputBusqueda.value.trim();
+  skip = 0;
+  cargarProduct();
+  /* if (!terminoBusqueda) return; // Si el término de búsqueda está vacío, no hacer nada
   fetch(`https://dummyjson.com/products/search?q=${terminoBusqueda}`)
     .then(res => res.json())
     .then(data => {
       mostrarProductos(data.products);
-    });
+    }); */
 });
 
 /* 
@@ -37,13 +39,12 @@ const mostrarProductos = (productos) => {
 
     tarjeta.innerHTML = `
       <a href="VistaDetalle.html?id=${products.id}" class="block p-4 hover:bg-gray-100 transition">
-      <div class="p-4">
-          <p class="text-gray-700 mb-2 font-bold ">${products.title}</p>
+          <p class="text-gray-700 mb-2 font-bold">${products.title}</p>
           <img src="${products.thumbnail}" alt="${products.title}" class="w-full h-56 bg-gray-200 rounded mb-2" />
-          <p>${products.description}</p> 
-          <p><strong>Price: </strong>${products.price}</p>
-          </a>
-      `;
+          <p class="text-sm text-gray-600">${products.description}</p>
+          <p class="font-semibold  mt-2"><strong>Price: </strong>$${products.price}</p>
+      </a>
+    `;
     contenedorProductos.appendChild(tarjeta);
   });
 }// Cargar productos al iniciar la página
@@ -57,8 +58,14 @@ let total = 0;
 const numPaginas = document.getElementById("num-paginas");
 const btnAnterior = document.getElementById("btn-anterior");
 const btnSiguiente = document.getElementById("btn-siguiente");
+
+
+
 const cargarProduct = () => {
-  fetch(`${urlAPI}?limit=${limit}&skip=${skip}`)
+  const finBusqueda = busquedaActual ?
+    `${urlAPI}/search?q=${busquedaActual}&limit=${limit}&skip=${skip}` : `${urlAPI}?limit=${limit}&skip=${skip}`;
+
+  fetch(finBusqueda)
     .then(res => res.json())
     .then(data => {
       total = data.total;
@@ -100,4 +107,3 @@ const ir = (i) => {
 
 cargarProduct();
 //=================================================================================
- 
