@@ -45,15 +45,22 @@
                     class="flex-1 rounded-md border border-gray-300 px-3 py-2">
 
                 <select id="categorias" class=" p-2 border border-gray-300 rounded">
-                    <option value="" disabled selected>Selecione Categoria</option>
+                    <option value="" disabled selected>Selecione Categoria...</option>
                 </select>
-
+                <select id="ordenar" onchange="cambiarOrden(this.value)" class="p-2 border border-gray-300 rounded"><!-- Llama a la funcion -->
+                    <option value="" disabled selected>Ordenar por...</option>
+                    <option value="title&order=asc">Titulo(A-Z)</option>
+                    <option value="title&order=desc">Titulo(Z-A)</option>
+                    <option value="price&order=asc">Precio(Menor a mayor)</option>
+                    <option value="price&order=desc">Precio(Mayor a menor)</option>
+                </select>
                 <button type="submit"
                     class="rounded-md border border-green-600 px-4 py-2 text-green-600 hover:bg-green-600 hover:text-white transition">Buscar
                 </button>
             </form>
         </nav>
         <!-- =)====================================================================== -->
+
         <!-- Contenedor productos -->
         <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
         <!--======================================== PAGINACION  ======================================-->

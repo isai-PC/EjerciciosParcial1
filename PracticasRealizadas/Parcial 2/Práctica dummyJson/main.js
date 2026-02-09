@@ -4,9 +4,10 @@ const formBusqueda = document.getElementById("form-busqueda");
 const inputBusqueda = document.getElementById("input-busqueda");
 let busquedaActual = "";
 let categoryActual = "";
+let ordenActual = "";
+
+
 const categoria = document.getElementById("categorias");
-
-
 formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
   busquedaActual = inputBusqueda.value.trim();
@@ -66,9 +67,16 @@ const btnSiguiente = document.getElementById("btn-siguiente");
 
 
 const cargarProduct = () => {
-  const finBusqueda = busquedaActual ? `${urlAPI}/search?q=${busquedaActual}&limit=${limit}&skip=${skip}` :/* <--Cuando hace una busqueda */
-    (categoryActual) ? `${urlAPI}/category/${categoryActual}?limit=${limit}&skip=${skip}` : /* <--Para lo de categorias */
-      `${urlAPI}?limit=${limit}&skip=${skip}`;
+  let finBusqueda = busquedaActual? `${urlAPI}/search?q=${busquedaActual}&` :/* <--Cuando hace una busqueda */
+    (categoryActual)? `${urlAPI}/category/${categoryActual}?` : /* <--Para lo de categorias */
+      `${urlAPI}?`;
+
+  finBusqueda += `limit=${limit}&skip=${skip}`;//<--AGREGA LO DE PAGINACION
+
+  if (ordenActual) {
+    finBusqueda += `&sortBy=${ordenActual}`; //<--para ordenar
+  }
+
 
   fetch(finBusqueda)
     .then(res => res.json())
@@ -119,6 +127,7 @@ const cargarCategrias = () => {
     .then(categorias => {
       const contenedorCategorias = document.getElementById("categorias");
       contenedorCategorias.innerHTML = ""; // Limpiar el contenedor antes de mostrar nuevas categorias
+
       categorias.forEach(categoria => {
         const option = document.createElement("option");
         option.value = categoria;
@@ -142,4 +151,10 @@ categoria.addEventListener("change", (e) => {//para cuando se cambia el select
 });
 cargarCategrias();
 /* ====================================================================================== */
+/* ORDENAR POR */
 
+const cambiarOrden = (valor) => {
+  ordenActual = valor;
+  skip = 0;
+  cargarProduct();
+}
