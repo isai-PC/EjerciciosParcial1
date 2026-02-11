@@ -8,6 +8,7 @@ let ordenActual = "";
 const categoria = document.getElementById("categorias");
 
 
+
 formBusqueda.addEventListener("submit", (evento) => {
   evento.preventDefault();
   busquedaActual = inputBusqueda.value.trim();

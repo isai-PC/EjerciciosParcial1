@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" /> <!-- Inter -->
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CDN -->
+    <script src="controlador.js" defer></script><!-- CONTROLADOR API -->
+</head>
+
+<body>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="bg-gray-900 border-b border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="https://dog.ceo/dog-api/" target="_blank" class="flex items-center gap-2 group">
+                            <img class="h-10 w-auto filter invert group-hover:scale-110 transition-transform"
+                                src="https://dog.ceo/img/dog-api-logo.svg" alt="Dog API Logo">
+                            <span class="text-white font-bold text-xl tracking-tight uppercase">Dog API Explorer</span>
+                        </a>
+                    </div>
+                    <div class="hidden md:block">
+                        <ul class="flex space-x-8">
+                            <li>
+                                <a href="/index.html"
+                                    class="text-blue-400 font-semibold border-b-2 border-blue-400 pb-1">Inicio</a>
+                            </li>
+                            <!--  <li>
+                                <a href="#" class="text-gray-300 hover:text-white transition-colors">Favoritos</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="bg-gray-50 border-b border-gray-200 py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <form id="form-busqueda" class="flex flex-col md:flex-row gap-4">
+
+                    <div class="relative flex-1">
+                        <span
+                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </span><!-- BUSQUEDA -->
+                        <input id="busqueda" type="search" placeholder="Escribe el nombre de una raza..."
+                            class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all shadow-sm">
+                    </div>
+
+                    <div class="w-full md:w-64"><!-- SELECTOR DE RAZASS -->
+                        <select id="raza"
+                            class="w-full p-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer shadow-sm">
+                            <option value="" disabled selected>Cargando razas...</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-lg transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                        Buscar Perro
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+
+        <div id="contenedor-perros" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        </div>
+
+        <!-- PAGINACION ========================== -->
+        <div class="mt-16 mb-12 flex justify-center">
+            <nav class="flex items-center gap-2  px-4 py-3 rounded-2xl" id="paginacion">
+                <button id="btn-anterior"
+                    class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-50 text-gray-500 font-semibold hover:bg-gray-800 hover:text-white transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                    Anterior
+                </button>
+                <div id="num-paginas"
+                    class="flex items-center px-6 text-gray-700 font-bold text-sm tracking-widest uppercase border-x border-gray-100">
+                </div>
+                <button id="btn-siguiente"
+                    class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-50 text-gray-500 font-semibold hover:bg-gray-800 hover:text-white transition-all duration-200 active:scale-95">
+                    Siguiente
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+            </nav>
+        </div>
+    </main>
+    <div id="detalle"></div>
+
+</body>
+
+</html>
