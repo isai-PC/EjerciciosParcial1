@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio de Desarrollador con GitHub API</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col antialiased">
+
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-6 py-4">
+            <div id="name-user"
+                class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-white-500 bg-clip-text text-transparent">
+                cargando...
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-8 w-full flex-grow">
+        <aside class="md:col-span-1">
+           <section class="flex flex-col items-center md:items-start space-y-4">                
+                <div class="text-2xl font-bold text-white" id="contenedor-perfil">@Usuario</div>
+            </section>
+        </aside>
+
+        <main class="md:col-span-3">
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <div id="repositorios-user" class="md:col-span-8 p-4 border border-slate-800 rounded-lg bg-slate-900/50">
+            <span class="text-slate-500 text-xs font-bold uppercase tracking-widest">Repositorios Públicos</span>
+            </div>
+
+        <div class="md:col-span-4 space-y-4">
+            <nav class="border-b border-slate-800 pb-2">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">comunidad</h3>
+            </nav>
+            <div id="comunidad-user" class="flex flex-col gap-2 text-sm text-slate-300">
+                <h3 class="hidden">Comunidad</h3>
+                </div>
+        </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="text-center py-8 text-slate-600 text-sm border-t border-slate-900 mt-10">
+        @isai-PC tailwind
+    </footer>
+</body>
+
+<script src="app.js"></script>
+
+</html>
